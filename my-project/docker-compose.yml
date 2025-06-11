@@ -1,0 +1,53 @@
+version: '3.8'
+
+services:
+  strapi:
+    build: .
+    container_name: strapi
+    environment:
+      DATABASE_CLIENT: postgres
+      DATABASE_HOST: postgres
+      DATABASE_PORT: 5432
+      DATABASE_NAME: strapi_db
+      DATABASE_USERNAME: strapi_user
+      DATABASE_PASSWORD: strapi_pass
+      NODE_ENV: development
+    depends_on:
+      - postgres
+    networks:
+      - strapi-net
+    restart: unless-stopped
+
+  postgres:
+    image: postgres:15
+    container_name: postgres
+    environment:
+      POSTGRES_DB: strapi_db
+      POSTGRES_USER: strapi_user
+      POSTGRES_PASSWORD: strapi_pass
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    networks:
+      - strapi-net
+    restart: unless-stopped
+
+  nginx:
+    image: nginx:latest
+    container_name: nginx
+    ports:
+      - "80:80"
+    volumes:
+      - ./nginx/default.conf:/etc/nginx/conf.d/default.conf
+    depends_on:
+      - strapi
+    networks:
+      - strapi-net
+    restart: unless-stopped
+
+volumes:
+  postgres-data:
+
+networks:
+  strapi-net:
+    driver: bridge
+
