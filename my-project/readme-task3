@@ -1,0 +1,46 @@
+# 🚀 Dockerized Strapi + PostgreSQL + Nginx
+
+This project sets up a full Docker environment for **Strapi** (a Node.js-based headless CMS), **PostgreSQL** (database), and **Nginx** (reverse proxy), allowing you to access the Strapi admin panel at **http://localhost**.
+
+---
+
+## 📦 Stack Used
+
+- **Strapi** – CMS (port: 1337 internally)
+- **PostgreSQL** – DB (port: 5432)
+- **Nginx** – Reverse Proxy (exposes Strapi on port: 80)
+- **Docker & Docker Compose**
+
+---
+
+## 📁 Directory Structure
+
+my-project/
+├── Dockerfile
+├── docker-compose.yml
+├── nginx/
+│ └── default.conf
+├── package.json
+└── (Your Strapi App Files)
+
+
+---
+
+## ⚙️ Setup Instructions
+
+### 1. Clone and Enter Project
+
+```bash
+git clone <repo-url>
+cd my-project
+ 
+## step -2
+### start services
+- docker compose up --build -d
+
+## open browser
+Visit: http://localhost
+
+
+## 🛑 Shutdown Instructions
+- docker compose down -v
